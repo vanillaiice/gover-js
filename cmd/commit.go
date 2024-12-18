@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
+	"regexp"
 	"strings"
 	"text/template"
 
@@ -34,6 +36,17 @@ func generateCommitCommand(tmpl, file, version string) (string, error) {
 	return b.String(), nil
 }
 
+func splitCommand(command string) []string {
+	re := regexp.MustCompile(`(?:[^\s'"]+|['"][^'"]*['"])`)
+	matches := re.FindAllString(command, -1)
+	for i, match := range matches {
+		if len(match) > 1 && (match[0] == '"' || match[0] == '\'') && match[len(match)-1] == match[0] {
+			matches[i] = match[1 : len(match)-1]
+		}
+	}
+	return matches
+}
+
 // commitCmd is the commit command.
 var commitCmd = &cli.Command{
 	Name:    "commit",
@@ -51,7 +64,7 @@ var commitCmd = &cli.Command{
 			Name:    "command",
 			Aliases: []string{"c"},
 			Usage:   "template for commit `COMMAND`",
-			Value:   "git commit {{ .File }} -m 'chore: bump version to {{ .Version }}'",
+			Value:   "git commit {{ .File }} -m \"chore: bump version to {{ .Version }}\"",
 			EnvVars: []string{"COMMIT_COMMAND"},
 		},
 	},
@@ -65,10 +78,13 @@ var commitCmd = &cli.Command{
 		if err != nil {
 			return err
 		}
-		cmdStringParts := strings.Split(cmdString, " ")
+		cmdStringParts := splitCommand(cmdString)
 
 		var cmd *exec.Cmd
-		if len(cmdStringParts) == 1 {
+		lenCmdStringParts := len(cmdStringParts)
+		if lenCmdStringParts == 0 {
+			return fmt.Errorf("invalid command: %s", cmdString)
+		} else if lenCmdStringParts == 1 {
 			cmd = exec.Command(cmdStringParts[0])
 		} else {
 			cmd = exec.Command(cmdStringParts[0], cmdStringParts[1:]...)
