@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"os"
-	"os/exec"
 	"strings"
 	"text/template"
 
@@ -59,23 +57,12 @@ var tagCmd = &cli.Command{
 			return
 		}
 
-		cmdString, err := generateTagCommand(ctx.String("command"), versionData.Version)
+		command, err := generateTagCommand(ctx.String("command"), versionData.Version)
 		if err != nil {
 			return
 		}
-		cmdStringParts := strings.Split(cmdString, " ")
 
-		var cmd *exec.Cmd
-		if len(cmdStringParts) == 1 {
-			cmd = exec.Command(cmdStringParts[0])
-		} else {
-			cmd = exec.Command(cmdStringParts[0], cmdStringParts[1:]...)
-		}
-
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-
-		if err = cmd.Run(); err != nil {
+		if err = runCommand(command); err != nil {
 			return
 		}
 
