@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/urfave/cli/v2"
 	"github.com/vanillaiice/gover-js/version"
 )
@@ -40,6 +41,8 @@ func Exec() {
 			},
 		},
 	}
+
+	godotenv.Load(".env", ".gover") //nolint:errcheck
 
 	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
