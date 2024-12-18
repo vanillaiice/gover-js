@@ -19,9 +19,10 @@ func Exec() {
 		EnableBashCompletion:   true,
 		Authors:                []*cli.Author{{Name: "vanillaiice", Email: "vanillaiice1@proton.me"}},
 		Commands: []*cli.Command{
-			bumpCmd,
-			tagCmd,
 			getCmd,
+			bumpCmd,
+			commitCmd,
+			tagCmd,
 		},
 		Flags: []cli.Flag{
 			&cli.BoolFlag{

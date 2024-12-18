@@ -28,7 +28,7 @@ func UpdatePackageVersion(filePath string, version string) (err error) {
 
 	_, ok := oj.Data["version"]
 	if !ok {
-		return fmt.Errorf("version not found in package.json")
+		return fmt.Errorf("version not found in %s", filePath)
 	}
 
 	oj.Data["version"] = version

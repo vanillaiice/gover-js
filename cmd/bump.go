@@ -10,7 +10,7 @@ import (
 	"github.com/vanillaiice/gover-js/load"
 )
 
-// perm is the file permission.
+// perm is the file permission used to create files.
 const perm = 0644
 
 // bumpCmd is the bump command.

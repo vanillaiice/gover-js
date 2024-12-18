@@ -10,13 +10,14 @@ import (
 
 func TestUpdatePackageVersion(t *testing.T) {
 	const filePath = "package_test.json"
+	const want = "6.9.420"
 
 	fileContent, err := os.ReadFile(filePath)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = gen.UpdatePackageVersion(filePath, "6.9.420")
+	err = gen.UpdatePackageVersion(filePath, want)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -32,7 +33,6 @@ func TestUpdatePackageVersion(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	want := "6.9.420"
 	if packageJsonData.Version != want {
 		t.Errorf("got %q, want %q", packageJsonData.Version, want)
 	}

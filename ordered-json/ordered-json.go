@@ -47,9 +47,6 @@ func (o *OrderedJSON) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements the json.Marshaler interface
 func (o OrderedJSON) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
-	enc := json.NewEncoder(&buf)
-	enc.SetIndent("", "  ")
-
 	buf.WriteString("{\n")
 
 	for i, key := range o.Order {
@@ -57,7 +54,6 @@ func (o OrderedJSON) MarshalJSON() ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
-
 		buf.Write([]byte("  "))
 		buf.Write(keyJSON)
 		buf.WriteString(": ")
@@ -76,6 +72,5 @@ func (o OrderedJSON) MarshalJSON() ([]byte, error) {
 	}
 
 	buf.WriteString("}")
-
 	return buf.Bytes(), nil
 }
