@@ -19,13 +19,6 @@ var bumpCmd = &cli.Command{
 	Usage:   "bump version",
 	Aliases: []string{"b"},
 	Flags: []cli.Flag{
-		&cli.PathFlag{
-			Name:    "file",
-			Aliases: []string{"f"},
-			Usage:   "load version from `FILE`",
-			Value:   "package.json",
-			EnvVars: []string{"VERSION_FILE"},
-		},
 		&cli.BoolFlag{
 			Name:    "major",
 			Aliases: []string{"m"},

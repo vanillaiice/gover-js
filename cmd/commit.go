@@ -38,13 +38,6 @@ var commitCmd = &cli.Command{
 	Aliases: []string{"c"},
 	Usage:   "commit version",
 	Flags: []cli.Flag{
-		&cli.PathFlag{
-			Name:    "file",
-			Aliases: []string{"f"},
-			Usage:   "load version from `FILE`",
-			Value:   "package.json",
-			EnvVars: []string{"VERSION_FILE"},
-		},
 		&cli.StringFlag{
 			Name:    "command",
 			Aliases: []string{"c"},

@@ -36,13 +36,6 @@ var tagCmd = &cli.Command{
 	Aliases: []string{"t"},
 	Usage:   "tag branch with the current version",
 	Flags: []cli.Flag{
-		&cli.PathFlag{
-			Name:    "file",
-			Aliases: []string{"f"},
-			Usage:   "load version from `FILE`",
-			Value:   "package.json",
-			EnvVars: []string{"VERSION_FILE"},
-		},
 		&cli.StringFlag{
 			Name:    "command",
 			Aliases: []string{"c"},
